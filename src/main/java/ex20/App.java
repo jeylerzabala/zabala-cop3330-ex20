@@ -37,5 +37,52 @@ Allow the user to also enter the state’s full name in upper, lower, or mixed c
 Implement the program using data structures to avoid nested if statements.
 */
 
+import java.util.Scanner;
+
 public class App {
+    public static void main(String[] args) {
+
+        int orderAmount;
+        double specialCountyTotal, total, salesTaxWis, salesTaxIll, additionalTax, totalTax;
+        salesTaxWis = 1.05;
+        salesTaxIll = 1.08;
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("What is the order amount? ");
+        orderAmount = sc.nextInt();
+
+        Scanner in = new Scanner(System.in);
+        System.out.print("What state do you live in? ");
+        String state = in.nextLine();
+
+        if (state.equals("Wisconsin")) {
+            total = orderAmount * salesTaxWis;
+            System.out.print("What state do you county in? ");
+            String county = in.nextLine();
+            if (county.equals("Eau Claire")) {
+                additionalTax = 0.005;
+                totalTax = (salesTaxWis * orderAmount) + additionalTax;
+                specialCountyTotal = total + additionalTax;
+            }
+            if (county.equals("Dunn")) {
+                additionalTax = 0.004;
+                totalTax = (salesTaxWis * orderAmount) + additionalTax;
+                specialCountyTotal = total + additionalTax;
+            }
+            else {
+                specialCountyTotal = total;
+            }
+            System.out.println("The tax is $" + totalTax + ".\nThe total is $" + specialCountyTotal + ".");
+
+        }
+        if(state.equals("Illinois")) {
+            totalTax = (salesTaxIll * orderAmount);
+            total = orderAmount * salesTaxIll;
+            System.out.println("The tax is $" + totalTax + ".\nThe total is $" + total + ".");
+        }
+        else {
+            System.out.println("The total is $" + orderAmount + ".");
+
+        }
+    }
 }
