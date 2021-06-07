@@ -18,15 +18,15 @@ For Eau Claire county residents, add an additional 0.005 tax.
 For Dunn county residents, add an additional 0.004 tax.
 Illinois residents must be charged 8% sales tax with no additional county-level charge.
 All other states are not charged tax.
-The program then displays the tax and the total for
-Wisconsin and Illinois residents but just the total for everyone else.
+The program then displays the tax and the totalTax for
+Wisconsin and Illinois residents but just the totalTax for everyone else.
 
 Example Output
 What is the order amount? 10
 What state do you live in? Wisconsin
 What county do you live in? Dane
 The tax is $0.50.
-The total is $10.50.
+The totalTax is $10.50.
 Constraints
 Ensure that all money is rounded up to the nearest cent.
 Use a single output statement at the end of the program to display the program results.
@@ -41,11 +41,9 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-
-        int orderAmount;
-        double specialCountyTotal, total, salesTaxWis, salesTaxIll, additionalTax, totalTax;
-        salesTaxWis = 1.05;
-        salesTaxIll = 1.08;
+        double orderAmount, totalTax, salesTaxWis, salesTaxIll, additionalTax;
+        salesTaxWis = .05;
+        salesTaxIll = .08;
 
         Scanner sc = new Scanner(System.in);
         System.out.print("What is the order amount? ");
@@ -56,33 +54,27 @@ public class App {
         String state = in.nextLine();
 
         if (state.equals("Wisconsin")) {
-            total = orderAmount * salesTaxWis;
-            System.out.print("What state do you county in? ");
+            totalTax = orderAmount * salesTaxWis;
+            System.out.print("What county do you live in? ");
             String county = in.nextLine();
             if (county.equals("Eau Claire")) {
                 additionalTax = 0.005;
-                totalTax = (salesTaxWis * orderAmount) + additionalTax;
-                specialCountyTotal = total + additionalTax;
             }
-            if (county.equals("Dunn")) {
+            else if (county.equals("Dunn")) {
                 additionalTax = 0.004;
-                totalTax = (salesTaxWis * orderAmount) + additionalTax;
-                specialCountyTotal = total + additionalTax;
+            } else {
+                additionalTax = 0;
             }
-            else {
-                specialCountyTotal = total;
-            }
-            System.out.println("The tax is $" + totalTax + ".\nThe total is $" + specialCountyTotal + ".");
-
+            orderAmount =  totalTax + orderAmount + additionalTax;
         }
-        if(state.equals("Illinois")) {
+        else if(state.equals("Illinois")) {
             totalTax = (salesTaxIll * orderAmount);
-            total = orderAmount * salesTaxIll;
-            System.out.println("The tax is $" + totalTax + ".\nThe total is $" + total + ".");
-        }
-        else {
-            System.out.println("The total is $" + orderAmount + ".");
+            orderAmount =  totalTax + orderAmount;
 
+        } else {
+            totalTax = 0;
         }
+        System.out.println("The tax is $" + Math.round(totalTax * 100.0) / 100.0 +
+                ".\nThe total is $" + Math.round(orderAmount * 100.0) / 100.0 + ".");
     }
 }
